@@ -1,5 +1,5 @@
     <!-- Mainly scripts -->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/plugins/jquery-2.1.1.min.js"></script>
 
     <!-- Data Tables -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>

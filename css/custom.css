@@ -132,3 +132,27 @@ body
 		max-width: 50px;
 	}
 }
+
+.item-redeem
+{
+	text-align: center;
+	margin-top: 15px;
+}
+
+.item-redeem .item-redeem-img, .item-redeem .item-redeem-close
+{
+	width: 85%;
+	cursor: pointer;
+}
+
+.item-redeem .item-redeem-code-title
+{
+	color: #000;
+}
+
+.item-redeem .item-redeem-code
+{
+	color: red;
+	font-size: 2rem;
+	margin: 15px 0;
+}

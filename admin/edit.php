@@ -33,6 +33,7 @@ if(!empty($_POST))
                 "url" => $_POST['url'],
                 "thumbnail_url" => $_POST['thumbnail_url'],
                 "rank" => $_POST['rank'],
+                "redeem_code" => $_POST['redeem_code'],
             );
 
             $sql = "SELECT * FROM ranking 
@@ -213,6 +214,13 @@ if($id)
                                             <label class="control-label col-sm-2"> 排序(愈大優先) <span style="color:red;">*</span></label>
                                             <div class="col-sm-10">
                                                 <input type="number" name="rank" value="<?php echo !empty($rankingData["rank"]) ? htmlentities($rankingData["rank"]) : '' ?>" class="form-control" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2"> 兌換碼 <span style="color:red;"></span></label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="redeem_code" value="<?php echo !empty($rankingData["redeem_code"]) ? htmlentities($rankingData["redeem_code"]) : '' ?>" class="form-control"/>
                                             </div>
                                         </div>
 

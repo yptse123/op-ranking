@@ -38,6 +38,7 @@ if(count($rankingData) < $max)
     <meta name="description" content="&#8734; GAMES 遊戲排名">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/custom.css">
 
 </head>
@@ -94,6 +95,34 @@ if(count($rankingData) < $max)
 
 					</div>
 
+					<div class="item-redeem">
+
+						<?php if(!empty($row["redeem_code"])): ?>
+
+						<!-- Button trigger modal -->
+						<img src="images/redeem_code.png" class="item-redeem-img" alt="" title="" data-toggle="modal" data-target="#redeem-<?php echo $row["id"] ?>">
+
+						<!-- Modal -->
+						<div class="modal fade" id="redeem-<?php echo $row["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="redeem-<?php echo $row["id"] ?>" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-body">
+										<div class="item-redeem-code-title">
+											<?php echo $row["title"] ?>兌換碼
+										</div>
+										<div class="item-redeem-code">
+											<?php echo $row["redeem_code"] ?>
+										</div>
+										<img src="images/close.png" class="item-redeem-close" alt="" title="" data-dismiss="modal">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<?php endif; ?>
+
+					</div>
+
 				</div>
 
 				<?php if($count % 3 == 0): ?>
@@ -117,5 +146,12 @@ if(count($rankingData) < $max)
 	</div>
 
 </body>
+
+<!-- Mainly scripts -->
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<script src="js/custom.js"></script>
 
 </html>

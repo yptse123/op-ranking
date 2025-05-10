@@ -38,6 +38,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                                         <th>遊戲</th>
                                         <th>網址</th>
                                         <th>圖片</th>
+                                        <th>兌換碼</th>
                                         <th>排序(愈大優先 前台只顯示前6個)</th>
                                         <th>新增時間</th>
                                         <th>最後修改時間</th>
@@ -51,6 +52,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                                         <td><?php echo $row["title"] ?></td>
                                         <td><?php echo $row["url"] ?></td>
                                         <td><img src="<?php echo $row["thumbnail_url"] ?>" style="max-width: 100px;"></td>
+                                        <td><?php echo $row["redeem_code"] ?></td>
                                         <td><?php echo $row["rank"] ?></td>
                                         <td><?php echo $row["created_at"] ?></td>
                                         <td><?php echo $row["updated_at"] ?></td>
