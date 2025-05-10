@@ -1,0 +1,7 @@
+
+1. Responsive UI
+2. PHP+MySQL
+3. Admin Page:
+   - set the thumb image url of each game
+   - set the landing page url of each game
+   - set the ranking of each game (max 6 games)

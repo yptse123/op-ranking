@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    ports:
+      - "80:80"  # Changed from 8083:80 to 80:80
+    volumes:
+      - .:/var/www/html/op-ranking-page  # Changed path to include /op-ranking-page
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=op_ranking
+    restart: always
+
+  db:
+    image: mysql:5.7
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./admin/sql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=op_ranking
+    ports:
+      - "3306:3306"
+    restart: always
+
+volumes:
+  db_data:
