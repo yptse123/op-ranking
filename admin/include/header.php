@@ -23,12 +23,6 @@
     <link href="css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
     <link href="css/plugins/dataTables/fixedColumns.dataTables.css" rel="stylesheet">
 
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-
-    <style>
-       
-    </style>
 
 </head>

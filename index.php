@@ -8,6 +8,8 @@ $condition = array();
 $rankingData = array();
 $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition, "rank DESC", 1, $max);
 
+$bannerData = PM::getSingleton("Database")->getCollection("banner", $condition, "rank DESC", 1, $max);
+
 if(count($rankingData) < $max)
 {
 	$loop =  $max-count($rankingData);
@@ -39,6 +41,8 @@ if(count($rankingData) < $max)
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/custom.css">
 
 </head>
@@ -51,6 +55,24 @@ if(count($rankingData) < $max)
 
 			<img src="images/logo.png" class="top-container-logo">
 			
+		</div>
+
+		<div class="banner-container">
+
+			<div class="owl-carousel owl-theme">
+
+				<?php foreach($bannerData as $row): ?>
+
+				<div class="banner-item">
+					<a href="<?php echo $row["url"] ?>" target="_blank" >
+						<img src="<?php echo $row["image_url"] ?>" alt="<?php echo $row["title"] ?>" title="<?php echo $row["title"] ?>" /> 
+					</a> 
+				</div>
+
+				<?php endforeach; ?>
+				
+			</div>
+
 		</div>
 
 		<div class="mid-container">
@@ -99,10 +121,8 @@ if(count($rankingData) < $max)
 
 						<?php if(!empty($row["redeem_code"])): ?>
 
-						<!-- Button trigger modal -->
 						<img src="images/redeem_code.png" class="item-redeem-img" alt="" title="" data-toggle="modal" data-target="#redeem-<?php echo $row["id"] ?>">
 
-						<!-- Modal -->
 						<div class="modal fade" id="redeem-<?php echo $row["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="redeem-<?php echo $row["id"] ?>" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
@@ -151,6 +171,8 @@ if(count($rankingData) < $max)
 <script src="js/jquery-3.2.1.slim.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+
+<script src="js/owl.carousel.min.js"></script>
 
 <script src="js/custom.js"></script>
 

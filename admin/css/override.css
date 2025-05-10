@@ -48,3 +48,8 @@ table.dataTable thead .sorting:after
 {
 	content: none;
 }
+
+.nav-item
+{
+	padding: 25px 0;
+}

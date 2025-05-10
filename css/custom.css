@@ -156,3 +156,20 @@ body
 	font-size: 2rem;
 	margin: 15px 0;
 }
+
+.owl-theme .owl-nav.disabled+.owl-dots
+{
+	margin-top: -2rem;
+    z-index: 999;
+    position: relative;
+}
+
+.owl-theme .owl-dots .owl-dot span
+{
+	background: #fff;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span
+{
+	background: red;
+}

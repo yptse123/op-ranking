@@ -29,7 +29,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                         </div>
                         <div class="ibox-content">
                             <div class="">
-                                <a href="edit.php" class="btn btn-primary btn-new">新增排名</a>
+                                <a href="rank_edit.php" class="btn btn-primary btn-new">新增排名</a>
                             </div>
                             <table class="table table-striped table-bordered table-hover dataTables" >
                                 <thead>
@@ -57,7 +57,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                                         <td><?php echo $row["created_at"] ?></td>
                                         <td><?php echo $row["updated_at"] ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?php echo $row["id"] ?>" class="btn btn-primary btn-edit">修改</a>
+                                            <a href="rank_edit.php?id=<?php echo $row["id"] ?>" class="btn btn-primary btn-edit">修改</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
