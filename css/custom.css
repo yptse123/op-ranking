@@ -1,0 +1,134 @@
+body
+{
+	font-family: '蘋果儷中黑', Raleway, sans-serif;
+	font: 800 20px/1.6875 '蘋果儷中黑', Raleway, sans-serif;
+	color: #fff;
+}
+
+.top-container
+{
+	background-image: url('../images/topbar.png');
+	width: 100%;
+    background-repeat: repeat-x;
+	text-align: center;
+	display: inline-block;
+	white-space: nowrap;
+	border-bottom: 5px #fff solid;
+}
+
+.top-container .top-container-logo
+{
+	width: 100%;
+	max-width: 443px;
+	vertical-align: middle;
+	margin: 20px 0;
+}
+
+.mid-container
+{
+	background-image: url('../images/bg.png');
+	padding: 5% 0;
+	background-size: cover;
+    height: 100%;
+}
+
+.mid-container .container-title
+{
+	border-left: 4px #b90000 solid;
+	line-height: 1;
+    padding-left: 5px;
+}
+
+.mid-container .item
+{
+	width: 33%;
+	padding: 3%;
+	position: relative;
+    display: inline-block;
+}
+
+.mid-container .item .item-container img
+{
+	width: 100%;
+}
+
+.mid-container .item .item-badge img 
+{
+	width: 100%;
+}
+
+.mid-container .item .item-badge
+{
+	display: inline-block;
+    position: absolute;
+    right: 8.5%;
+    text-align: right;
+}
+
+@media (max-width: 1200px)
+{
+	
+}
+
+@media (max-width: 1024px)
+{
+	.top-container .top-container-logo
+	{
+		max-width: 353px;
+	}
+
+	.mid-container .item .item-badge img 
+	{
+		max-width: 90px;
+	}
+
+	.mid-container .item .item-badge
+	{
+		width: 60%;
+	}
+
+	.mid-container
+	{
+		height: 100%;
+	}
+}
+
+@media (max-width: 992px)
+{
+	.mid-container
+	{
+		height: 100%;
+	}
+}
+
+@media (max-width: 767px)
+{
+	.top-container .top-container-logo
+	{
+		max-width: 333px;
+	}
+
+	.mid-container .item .item-badge img 
+	{
+		max-width: 70px;
+	}
+
+	.mid-container
+	{
+		height: 100vh;
+	    height: calc(var(--vh, 1vh) * 100);
+	}
+}
+
+@media (max-width: 480px)
+{
+	.top-container .top-container-logo
+	{
+		max-width: 223px;
+	}
+
+	.mid-container .item .item-badge img 
+	{
+		max-width: 50px;
+	}
+}
