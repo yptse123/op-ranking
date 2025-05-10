@@ -1,0 +1,50 @@
+.navbar-default ul
+{
+	padding-left: 5px;
+}
+
+.navbar-default li, div.dataTables_paginate .pagination, .panel-options ul
+{
+	list-style: none;
+}
+
+.navbar-default .profile-element img
+{
+	width: 100%;
+}
+
+div.dataTables_paginate
+{
+	width: 50%;
+}
+
+.dataTables_length select.form-control
+{
+	display: inline-block;
+}
+
+.btn-new, .btn-edit, .btn-back, .btn-save, .btn-remove
+{
+	padding: 10px 20px;
+	line-height: 4;
+}
+
+.btn-save, .btn-remove
+{
+	line-height: 1;
+}
+
+.pull-left, .pull-right
+{
+	display: inline-block;
+}
+
+.form-group
+{
+	height: 70px;
+}
+
+table.dataTable thead .sorting:after
+{
+	content: none;
+}
