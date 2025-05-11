@@ -44,8 +44,8 @@ CREATE TABLE `ranking` (
 --
 
 INSERT INTO `ranking` (`id`, `title`, `url`, `thumbnail_url`, `rank`, `created_at`, `updated_at`) VALUES
-(1, '救世少女', './op-ranking-page/images/game1.png', './op-ranking-page/images/game1.png', 999, '2023-05-28 08:29:56', '2023-05-28 08:58:52'),
-(2, '寶石姬', './op-ranking-page/images/game2.png', './op-ranking-page/images/game2.png', 998, '2023-05-28 08:57:56', '2023-05-28 08:58:02');
+(1, '救世少女', '/op-ranking-page/images/game1.png', '/op-ranking-page/images/game1.png', 999, '2023-05-28 08:29:56', '2023-05-28 08:58:52'),
+(2, '寶石姬', '/op-ranking-page/images/game2.png', '/op-ranking-page/images/game2.png', 998, '2023-05-28 08:57:56', '2023-05-28 08:58:02');
 
 --
 -- 已傾印資料表的索引
