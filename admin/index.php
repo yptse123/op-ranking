@@ -1,4 +1,4 @@
-<?php include "include/header.php"; ?>
+<?php ob_start(); include "include/header.php"; ?>
 
 <?php
 
@@ -81,7 +81,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                 pageLength: 20,
                 searching: false,
                 "lengthMenu": [ 20, 50, 100 ],
-                "order": [[ 4, "desc" ]],
+                "order": [[ 5, "desc" ]],
                 language: {
                     url: './config/zh_Hant.json',
                 },

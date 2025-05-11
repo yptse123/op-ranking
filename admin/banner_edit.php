@@ -1,4 +1,4 @@
-<?php include "include/header.php"; ?>
+<?php ob_start(); include "include/header.php"; ?>
 
 <?php
 
@@ -306,7 +306,7 @@ if($id)
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
-                            
+
                             <hr/>
 
                         <?php endif; ?>
