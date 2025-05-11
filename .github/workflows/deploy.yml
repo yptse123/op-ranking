@@ -14,11 +14,32 @@ jobs:
         script: |
           cd /Users/yptse123/Documents/op-ranking
           git pull
-          # Stop all containers
-          docker compose down
-
-          # Remove all unused volumes
-          docker volume prune -f
-
-          # up and build the containers
-          docker compose up -d --build
+          
+          # Check Docker installation and path
+          echo "Checking Docker installation..."
+          which docker || echo "Docker not found!"
+          which docker-compose || echo "Docker Compose not found!"
+          
+          # Try different paths for Docker
+          export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin
+          
+          # Check if docker compose is used instead of docker-compose
+          if command -v docker >/dev/null 2>&1; then
+            echo "Using Docker commands..."
+            
+            # Stop all containers
+            if command -v docker-compose >/dev/null 2>&1; then
+              docker-compose down
+              docker volume prune -f
+              docker-compose up -d --build
+            else
+              # Try docker compose with a space (newer Docker versions)
+              docker compose down
+              docker volume prune -f
+              docker compose up -d --build
+            fi
+          else
+            echo "ERROR: Docker is not installed or not in PATH!"
+            echo "Please install Docker Desktop for Mac or Docker with Homebrew"
+            exit 1
+          fi
