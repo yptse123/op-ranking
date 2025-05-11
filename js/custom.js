@@ -65,4 +65,30 @@ $(document).ready(function ()
             console.error('invalid banner_id');
         }
     });
+
+    let currentIndex = 0;
+
+    function showAnnouncement(index) {
+        if (index >= announcements.length) {
+            $('#announcementModal').modal('hide');
+            return;
+        }
+
+        const announcement = announcements[index];
+        $('#announcementImage').attr('src', announcement.image_url);
+        $('#announcementContent').html(announcement.content);
+        $('#announcementModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    if (announcements.length > 0) {
+        showAnnouncement(currentIndex);
+    }
+
+    $('#announcementModal').on('hidden.bs.modal', function (e) {
+        currentIndex++;
+        showAnnouncement(currentIndex);
+    });
 });

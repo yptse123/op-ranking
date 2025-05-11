@@ -42,6 +42,7 @@ div.dataTables_paginate
 .form-group
 {
 	height: 70px;
+	margin-bottom: 20px;
 }
 
 table.dataTable thead .sorting:after

@@ -14,4 +14,8 @@
                     <li class="nav-item" data-nav="banner">
                         <a href="banner.php"><span class="nav-label">輪播廣告</span></a>
                     </li>
+                    
+                    <li class="nav-item" data-nav="announcement">
+                        <a href="announcement.php"><span class="nav-label">公告</span></a>
+                    </li>
                 </ul>

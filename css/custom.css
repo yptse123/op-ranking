@@ -139,7 +139,7 @@ body
 	margin-top: 15px;
 }
 
-.item-redeem .item-redeem-img, .item-redeem .item-redeem-close
+.item-redeem .item-redeem-img, .item-redeem .item-redeem-close, .item-announcement-close
 {
 	width: 85%;
 	cursor: pointer;
@@ -172,4 +172,35 @@ body
 .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span
 {
 	background: red;
+}
+
+.announcement-modal .modal-content
+{
+	background-color: transparent;
+	border: none;
+}
+
+.announcement-modal .modal-body
+{
+	background-image: url('../images/announcement_bg.png');
+	background-size: cover;
+	background-position: top;
+}
+
+.announcement-modal #announcementImage, .announcement-modal #announcementContent
+{
+	width: 100%;
+    padding: 5px;
+}
+
+.announcement-modal #announcementContent
+{
+    white-space: normal;
+    word-break: break-all;
+    color: #000;
+}
+
+.announcement-modal .item-announcement-close-container
+{
+	text-align: center;
 }

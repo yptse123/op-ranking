@@ -7,8 +7,23 @@ $max = 6;
 $condition = array();
 $rankingData = array();
 $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition, "rank DESC", 1, $max);
-
 $bannerData = PM::getSingleton("Database")->getCollection("banner", $condition, "rank DESC", 1, $max);
+
+$condition = array(
+	"is_active" => array(
+		"oper" => "=",
+		"val" => "1",
+	),
+	"starttime" => array(
+		"oper" => "<=",
+		"val" => date("Y-m-d H:i:s"),
+	),
+	"endtime" => array(
+		"oper" => ">=",
+		"val" => date("Y-m-d H:i:s"),
+	),
+);
+$announcementData = PM::getSingleton("Database")->getCollection("announcement", $condition, "rank DESC", 1, 999);
 
 if(count($rankingData) < $max)
 {
@@ -164,6 +179,22 @@ if(count($rankingData) < $max)
 			
 		</div>
 
+		<div class="modal fade announcement-modal" id="announcementModal" tabindex="-1" role="dialog" aria-labelledby="announcementModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div>
+							<img id="announcementImage" class="announcement-image" src="" alt="">
+						</div>
+						<div id="announcementContent" class="announcement-content"></div>
+						<div class="item-announcement-close-container">
+							<img src="images/close.png" class="item-announcement-close" alt="" title="" data-dismiss="modal">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 </body>
@@ -174,6 +205,10 @@ if(count($rankingData) < $max)
 <script src="js/bootstrap.bundle.min.js"></script>
 
 <script src="js/owl.carousel.min.js"></script>
+
+<script>
+const announcements = <?php echo json_encode($announcementData); ?>;
+</script>
 
 <script src="js/custom.js"></script>
 
