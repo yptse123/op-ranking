@@ -38,6 +38,7 @@ if(count($rankingData) < $max)
     <meta name="title" content="&#8734; GAMES 遊戲排名">
     <meta name="keywords" content="&#8734; GAMES 遊戲排名">
     <meta name="description" content="&#8734; GAMES 遊戲排名">
+	<meta name="csrf-token" content="<?php echo htmlspecialchars(PM::getSingleton('Common')->generateCsrfToken()); ?>">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
@@ -63,8 +64,8 @@ if(count($rankingData) < $max)
 
 				<?php foreach($bannerData as $row): ?>
 
-				<div class="banner-item">
-					<a href="<?php echo $row["url"] ?>" target="_blank" >
+				<div class="banner-item" data-banner-id="<?php echo $row["id"] ?>">
+					<a href="<?php echo $row["url"] ?>" class="banner" target="_blank" >
 						<img src="<?php echo $row["image_url"] ?>" alt="<?php echo $row["title"] ?>" title="<?php echo $row["title"] ?>" /> 
 					</a> 
 				</div>
@@ -168,7 +169,7 @@ if(count($rankingData) < $max)
 </body>
 
 <!-- Mainly scripts -->
-<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 

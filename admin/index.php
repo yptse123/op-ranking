@@ -83,7 +83,7 @@ $rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition
                 "lengthMenu": [ 20, 50, 100 ],
                 "order": [[ 4, "desc" ]],
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json',
+                    url: './config/zh_Hant.json',
                 },
                 scrollCollapse: true,
             });

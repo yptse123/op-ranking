@@ -263,7 +263,7 @@ if($id)
 
                         <?php if($id) : ?>
 
-                            <div>顯示資料</div>
+                            <div><strong>顯示日誌</strong></div>
 
                             <table class="table table-striped table-bordered table-hover dataTables" >
                                 <thead>
@@ -286,7 +286,7 @@ if($id)
 
                             <hr/>
 
-                            <div>點擊資料</div>
+                            <div><strong>點擊日誌</strong></div>
 
                             <table class="table table-striped table-bordered table-hover dataTables" >
                                 <thead>
@@ -306,6 +306,8 @@ if($id)
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            
+                            <hr/>
 
                         <?php endif; ?>
 
@@ -332,7 +334,7 @@ if($id)
                 "lengthMenu": [ 20, 50, 100 ],
                 "order": [[ 2, "desc" ]],
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json',
+                    url: './config/zh_Hant.json',
                 },
                 scrollCollapse: true,
             });
