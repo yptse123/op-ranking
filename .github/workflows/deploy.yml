@@ -13,21 +13,7 @@ jobs:
         port: 22
         script: |
           cd /Users/yptse123/Documents/op-ranking
-          
-          # Install Git LFS if not available
-          if ! command -v git-lfs >/dev/null 2>&1; then
-            echo "Installing Git LFS..."
-            brew install git-lfs
-          fi
-          
-          # Configure Git LFS and pull files
-          git lfs install
           git pull
-          git lfs pull
-          
-          # Verify SQL file content (should not show Git LFS pointer)
-          echo "Checking SQL file content:"
-          head -n 5 /Users/yptse123/Documents/op-ranking/admin/sql/001_op_ranking.sql
           
           # Set up PATH for Docker
           export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin
@@ -43,30 +29,23 @@ jobs:
             # Create or update Docker config to skip credential helper
             echo '{"credsStore":"", "auths":{"https://index.docker.io/v1/":{}}}' > ~/.docker/config.json
             
-            # Force clean environment to ensure SQL migrations run
-            docker compose down -v || true
-            docker volume rm op-ranking-db-data || true
-            
             # Try docker compose command (newer Docker versions use 'docker compose')
             if docker compose version >/dev/null 2>&1; then
               echo "Using 'docker compose' command..."
+              docker compose down || true
+              docker compose pull --quiet || true
               docker compose build --no-cache
               docker compose up -d
-              
-              # Wait for DB to be ready and check logs
-              echo "Waiting for database to initialize..."
-              sleep 15
-              docker compose logs db
-            else
-              # Fall back to docker-compose
+            # Fall back to docker-compose command
+            elif command -v docker-compose >/dev/null 2>&1; then
               echo "Using 'docker-compose' command..."
+              docker-compose down || true
+              docker-compose pull --quiet || true
               docker-compose build --no-cache
               docker-compose up -d
-              
-              # Wait for DB to be ready and check logs
-              echo "Waiting for database to initialize..."
-              sleep 15
-              docker-compose logs db
+            else
+              echo "ERROR: Neither 'docker compose' nor 'docker-compose' found"
+              exit 1
             fi
           else
             echo "ERROR: Docker is not installed or not in PATH"
