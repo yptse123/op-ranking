@@ -7,4 +7,4 @@ UPDATE op_ranking.ranking SET redeem_code='123' WHERE id=1;
 --
 INSERT INTO op_ranking.banner
 (id, title, url, image_url, `rank`, impression, click, created_at, updated_at)
-VALUES(1, 'Ur1', 'http://localhost/op-ranking-page/images/test-banner.png', 'http://localhost/op-ranking-page/images/test-banner.png', 1, 0, 0, '2025-05-11 15:13:26', NULL);
+VALUES(1, 'Ur1', './op-ranking-page/images/test-banner.png', './op-ranking-page/images/test-banner.png', 1, 0, 0, '2025-05-11 15:13:26', NULL);
