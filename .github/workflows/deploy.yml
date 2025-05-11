@@ -1,0 +1,24 @@
+name: Deploy to Mac Mini
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: SSH and Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.MAC_MINI_IP }}
+        username: ${{ secrets.MAC_MINI_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /Users/yptse123/Documents/op-ranking
+          git pull
+          # Stop all containers
+          docker-compose down
+
+          # Remove all unused volumes
+          docker volume prune -f
+
+          # up and build the containers
+          docker-compose up -d --build
