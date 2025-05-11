@@ -58,3 +58,8 @@ table.dataTable thead .sorting:after
 {
 	float: unset;
 }
+
+.float-e-margins .btn
+{
+	white-space: nowrap;
+}
