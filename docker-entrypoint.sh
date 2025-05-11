@@ -12,7 +12,9 @@ process_sql_migrations() {
   done
   
   # Create migrations tracking table if it doesn't exist
-  mysql -h db -u root -ppassword op_ranking -e "
+  mysql -h db -u root -ppassword -e "
+    CREATE DATABASE IF NOT EXISTS op_ranking;
+    USE op_ranking;
     CREATE TABLE IF NOT EXISTS migrations (
       id INT AUTO_INCREMENT PRIMARY KEY,
       filename VARCHAR(255) NOT NULL,
@@ -26,15 +28,18 @@ process_sql_migrations() {
     FILENAME=$(basename "$SQL_FILE")
     
     # Check if migration has already been executed
-    APPLIED=$(mysql -h db -u root -ppassword op_ranking -se "SELECT COUNT(*) FROM migrations WHERE filename = '$FILENAME'")
+    APPLIED=$(mysql -h db -u root -ppassword op_ranking -se "SELECT COUNT(*) FROM migrations WHERE filename = '$FILENAME'" || echo "0")
     
-    if [ "$APPLIED" -eq "0" ]; then
+    if [ "$APPLIED" = "0" ]; then
       echo "Applying migration: $FILENAME"
-      mysql -h db -u root -ppassword op_ranking < "$SQL_FILE"
       
-      # Record the migration
-      mysql -h db -u root -ppassword op_ranking -e "INSERT INTO migrations (filename) VALUES ('$FILENAME')"
-      echo "Migration $FILENAME applied successfully"
+      # Apply the migration and immediately record it to prevent reapplication
+      mysql -h db -u root -ppassword op_ranking -e "
+        START TRANSACTION;
+        SOURCE $SQL_FILE;
+        INSERT INTO migrations (filename) VALUES ('$FILENAME');
+        COMMIT;
+      " && echo "Migration $FILENAME applied successfully" || echo "Error applying migration $FILENAME"
     else
       echo "Migration $FILENAME already applied, skipping"
     fi
@@ -51,9 +56,12 @@ setup_initial_database() {
   
   if [ "$TABLES_COUNT" -eq "0" ]; then
     echo "Initializing database with op_ranking.sql"
+    # Create database if it doesn't exist
+    mysql -h db -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS op_ranking;"
+    
     # Apply the initial schema
     if [ -f /var/www/html/op-ranking-page/admin/sql/op_ranking.sql ]; then
-      mysql -h db -u root -ppassword < /var/www/html/op-ranking-page/admin/sql/op_ranking.sql
+      mysql -h db -u root -ppassword op_ranking < /var/www/html/op-ranking-page/admin/sql/op_ranking.sql
       echo "Initial database setup completed"
     else
       echo "Warning: Initial SQL file not found at /var/www/html/op-ranking-page/admin/sql/op_ranking.sql"
@@ -68,6 +76,9 @@ echo "Starting database initialization process..."
 setup_initial_database
 process_sql_migrations
 echo "Database initialization complete."
+
+# Create a flag file to indicate successful initialization
+touch /var/www/html/op-ranking-page/.db_initialized
 
 # Start the main process
 exec "$@"

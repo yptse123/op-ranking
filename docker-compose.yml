@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     platform: ${DOCKER_PLATFORM:-linux/amd64}
     ports:
-      - "80:80"  # Changed from 8083:80 to 80:80
+      - "80:80"
     volumes:
-      - .:/var/www/html/op-ranking-page  # Changed path to include /op-ranking-page
+      - .:/var/www/html/op-ranking-page
     depends_on:
       - db
     environment:
@@ -34,3 +34,4 @@ services:
 
 volumes:
   db_data:
+    name: op-ranking-db-data
