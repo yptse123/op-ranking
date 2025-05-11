@@ -32,14 +32,16 @@ jobs:
             # Try docker compose command (newer Docker versions use 'docker compose')
             if docker compose version >/dev/null 2>&1; then
               echo "Using 'docker compose' command..."
-              docker compose down || true
+              docker compose down -v || true
+              docker volume prune -f || true
               docker compose pull --quiet || true
               docker compose build --no-cache
               docker compose up -d
             # Fall back to docker-compose command
             elif command -v docker-compose >/dev/null 2>&1; then
               echo "Using 'docker-compose' command..."
-              docker-compose down || true
+              docker-compose down -v || true
+              docker-volume prune -f || true
               docker-compose pull --quiet || true
               docker-compose build --no-cache
               docker-compose up -d
