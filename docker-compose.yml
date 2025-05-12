@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    platform: ${DOCKER_PLATFORM}
     ports:
       - "80:80"
     volumes:
@@ -11,27 +11,27 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASS=password
-      - DB_NAME=op_ranking
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
     restart: always
 
   db:
     image: mysql:5.7
-    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    platform: ${DOCKER_PLATFORM}
     volumes:
       - db_data:/var/lib/mysql
       - ./admin/sql:/docker-entrypoint-initdb.d
     command: 
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
+      - --character-set-server=${DB_CHARSET}
+      - --collation-server=${DB_COLLATION}
       - --skip-character-set-client-handshake
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=op_ranking
-      - MYSQL_CHARSET=utf8mb4
-      - MYSQL_COLLATION=utf8mb4_unicode_ci
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_CHARSET=${DB_CHARSET}
+      - MYSQL_COLLATION=${DB_COLLATION}
     ports:
       - "3306:3306"
     restart: always

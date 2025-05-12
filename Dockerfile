@@ -35,10 +35,11 @@ COPY docker-php-init.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-php-init.sh
 
 # Update the database configuration to use Docker environment
-RUN sed -i 's/CONST DB_HOST = "localhost"/CONST DB_HOST = "db"/g' /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
-    && sed -i 's/CONST DB_USERNAME = "root"/CONST DB_USERNAME = "root"/g' /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
-    && sed -i 's/CONST DB_PASSWORD = ""/CONST DB_PASSWORD = "password"/g' /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
-    && sed -i 's/CONST DB_DBNAME = "op_ranking"/CONST DB_DBNAME = "op_ranking"/g' /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php
+# Update the database configuration to use Docker environment
+RUN sed -i "s/CONST DB_HOST = \"localhost\"/CONST DB_HOST = \"${DB_HOST}\"/g" /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
+    && sed -i "s/CONST DB_USERNAME = \"root\"/CONST DB_USERNAME = \"${DB_USER}\"/g" /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
+    && sed -i "s/CONST DB_PASSWORD = \"\"/CONST DB_PASSWORD = \"${DB_PASS}\"/g" /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php \
+    && sed -i "s/CONST DB_DBNAME = \"op_ranking\"/CONST DB_DBNAME = \"${DB_NAME}\"/g" /var/www/html/op-ranking-page/admin/PM/classes/Data/Setting/Database.class.php
 
 # Create a simple landing page in the root directory
 RUN echo '<html><head><meta http-equiv="refresh" content="0;URL=/op-ranking-page/"></head><body>Redirecting...</body></html>' > /var/www/html/index.html

@@ -1,20 +1,26 @@
 #!/bin/bash
 set -e
 
+# Get environment variables or use defaults
+DB_HOST=${DB_HOST}
+DB_USER=${DB_USER}
+DB_PASS=${DB_PASS}
+DB_NAME=${DB_NAME}
+
 # Function to execute SQL files in numerical order
 process_sql_migrations() {
   echo "Checking for SQL migrations..."
   
   # Wait for MySQL to be ready
-  until mysql -h db -u root -ppassword -e "SELECT 1" >/dev/null 2>&1; do
+  until mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} -e "SELECT 1" >/dev/null 2>&1; do
     echo "Waiting for MySQL to be ready..."
     sleep 3
   done
   
   # Create migrations tracking table if it doesn't exist
-  mysql -h db -u root -ppassword -e "
-    CREATE DATABASE IF NOT EXISTS op_ranking;
-    USE op_ranking;
+  mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} -e "
+    CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+    USE ${DB_NAME};
     CREATE TABLE IF NOT EXISTS migrations (
       id INT AUTO_INCREMENT PRIMARY KEY,
       filename VARCHAR(255) NOT NULL,
@@ -28,13 +34,13 @@ process_sql_migrations() {
     FILENAME=$(basename "$SQL_FILE")
     
     # Check if migration has already been executed
-    APPLIED=$(mysql -h db -u root -ppassword op_ranking -se "SELECT COUNT(*) FROM migrations WHERE filename = '$FILENAME'" || echo "0")
+    APPLIED=$(mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} ${DB_NAME} -se "SELECT COUNT(*) FROM migrations WHERE filename = '$FILENAME'" || echo "0")
     
     if [ "$APPLIED" = "0" ]; then
       echo "Applying migration: $FILENAME"
       
       # Apply the migration and immediately record it to prevent reapplication
-      mysql -h db -u root -ppassword op_ranking -e "
+      mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} ${DB_NAME} -e "
         START TRANSACTION;
         SOURCE $SQL_FILE;
         INSERT INTO migrations (filename) VALUES ('$FILENAME');
@@ -50,18 +56,18 @@ process_sql_migrations() {
 
 # Execute initial setup if needed
 setup_initial_database() {
-  # Check if op_ranking database exists and has tables
+  # Check if database exists and has tables
   echo "Checking if database needs initialization..."
-  TABLES_COUNT=$(mysql -h db -u root -ppassword -e "SELECT COUNT(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'op_ranking'" | tail -n 1)
+  TABLES_COUNT=$(mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} -e "SELECT COUNT(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA = '${DB_NAME}'" | tail -n 1)
   
   if [ "$TABLES_COUNT" -eq "0" ]; then
     echo "Initializing database with op_ranking.sql"
     # Create database if it doesn't exist
-    mysql -h db -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS op_ranking;"
+    mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
     
     # Apply the initial schema
     if [ -f /var/www/html/op-ranking-page/admin/sql/op_ranking.sql ]; then
-      mysql -h db -u root -ppassword op_ranking < /var/www/html/op-ranking-page/admin/sql/op_ranking.sql
+      mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /var/www/html/op-ranking-page/admin/sql/op_ranking.sql
       echo "Initial database setup completed"
     else
       echo "Warning: Initial SQL file not found at /var/www/html/op-ranking-page/admin/sql/op_ranking.sql"
