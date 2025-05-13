@@ -39,32 +39,6 @@ CREATE TABLE `banner` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- 資料表結構 `banner_click_log`
---
-
-CREATE TABLE `banner_click_log` (
-  `id` int(11) NOT NULL,
-  `banner_id` int(11) NOT NULL,
-  `ip_address` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `banner_impression_log`
---
-
-CREATE TABLE `banner_impression_log` (
-  `id` int(11) NOT NULL,
-  `banner_id` int(11) NOT NULL,
-  `ip_address` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- 已傾印資料表的索引
 --
@@ -74,20 +48,6 @@ CREATE TABLE `banner_impression_log` (
 --
 ALTER TABLE `banner`
   ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `banner_click_log`
---
-ALTER TABLE `banner_click_log`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_CLICK_BANNER` (`banner_id`);
-
---
--- 資料表索引 `banner_impression_log`
---
-ALTER TABLE `banner_impression_log`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_IMPRESSIONN_BANNER` (`banner_id`);
 
 --
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
@@ -100,32 +60,9 @@ ALTER TABLE `banner`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `banner_click_log`
---
-ALTER TABLE `banner_click_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `banner_impression_log`
---
-ALTER TABLE `banner_impression_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- 已傾印資料表的限制式
 --
 
---
--- 資料表的限制式 `banner_click_log`
---
-ALTER TABLE `banner_click_log`
-  ADD CONSTRAINT `FK_CLICK_BANNER` FOREIGN KEY (`banner_id`) REFERENCES `banner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- 資料表的限制式 `banner_impression_log`
---
-ALTER TABLE `banner_impression_log`
-  ADD CONSTRAINT `FK_IMPRESSIONN_BANNER` FOREIGN KEY (`banner_id`) REFERENCES `banner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

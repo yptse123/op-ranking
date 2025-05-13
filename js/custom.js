@@ -4,28 +4,39 @@ $(document).ready(function ()
 
     const apiBaseUrl = 'api/';
 
-    function logEvent(bannerId, endpoint, onSuccess) {
-        if (!bannerId || !Number.isInteger(bannerId) || bannerId <= 0) {
-            console.error('invalid banner_id:', bannerId);
+    const bannerStats = {};
+
+    function initBannerStats(bannerId) {
+        if (!bannerStats[bannerId]) {
+            bannerStats[bannerId] = { impressions: 0, clicks: 0 };
+        }
+    }
+
+    function logAllBannerStats() {
+
+        if (Object.keys(bannerStats).length === 0) {
+            console.log('bannerStats empty');
             return;
         }
 
         jQuery.ajax({
-            url: apiBaseUrl + endpoint,
+            url: apiBaseUrl + "log_banner.php",
             method: 'POST',
             contentType: 'application/json',
             headers: { 'X-CSRF-Token': csrfToken },
-            data: JSON.stringify({ banner_id: bannerId, csrf_token: csrfToken }),
+            data: JSON.stringify({ banner_stats: bannerStats, csrf_token: csrfToken }),
             success: function(response) {
                 if (response.status === 'success') {
-                    console.log(`${endpoint} logged:`, response.log_id);
-                if (onSuccess) onSuccess();
+                    console.log(`log_banner.php logged:`, response.message);
+                    Object.keys(bannerStats).forEach(bannerId => {
+                        bannerStats[bannerId] = { impressions: 0, clicks: 0 };
+                    });
                 } else {
-                    console.error(`${endpoint} failed:`, response.message);
+                    console.error(`log_banner.php failed:`, response.message);
                 }
             },
             error: function(xhr, status, err) {
-                console.error(`Error logging ${endpoint}:`, status, err);
+                console.error(`Error logging log_banner.php:`, status, err);
                 if (xhr.status === 403) {
                     console.error('CSRF verify fail');
                 }
@@ -45,26 +56,34 @@ $(document).ready(function ()
     const firstItem = $('.owl-carousel .owl-item.active .banner-item');
     const firstBannerId = firstItem.data('banner-id');
     if (firstBannerId) {
-        logEvent(firstBannerId, 'log_impression.php');
+        initBannerStats(firstBannerId);
+        bannerStats[firstBannerId].impressions++;
+        // logEvent(firstBannerId, 'log_impression.php');
     }
 
     owl.on('changed.owl.carousel', function(event) {
         const currentItem = $(event.target).find('.owl-item').eq(event.item.index).find('.banner-item');
         const bannerId = currentItem.data('banner-id');
         if (bannerId) {
-            logEvent(bannerId, 'log_impression.php');
+            initBannerStats(bannerId);
+            bannerStats[bannerId].impressions++;
+            // logEvent(bannerId, 'log_impression.php');
         }
     })
 
     $('.owl-carousel').on('click', '.banner-item .banner', function() {
         const bannerId = $(this).parent().data('banner-id');
         if (bannerId) {
-            logEvent(bannerId, 'log_click.php', function() {
-            });
+            initBannerStats(bannerId);
+            bannerStats[bannerId].clicks++;
+            // logEvent(bannerId, 'log_click.php', function() {
+            // });
         } else {
             console.error('invalid banner_id');
         }
     });
+
+    setInterval(logAllBannerStats, 20000);
 
     let currentIndex = 0;
 

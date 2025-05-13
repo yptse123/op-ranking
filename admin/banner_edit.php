@@ -261,56 +261,6 @@ if($id)
 
                         </form>
 
-                        <?php if($id) : ?>
-
-                            <div><strong>顯示日誌</strong></div>
-
-                            <table class="table table-striped table-bordered table-hover dataTables" >
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>IP 地址</th>
-                                        <th>新增時間</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($bannerImpressionData as $row): ?>
-                                    <tr>
-                                        <td><?php echo $row["id"] ?></td>
-                                        <td><?php echo $row["ip_address"] ?></td>
-                                        <td><?php echo $row["created_at"] ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-
-                            <hr/>
-
-                            <div><strong>點擊日誌</strong></div>
-
-                            <table class="table table-striped table-bordered table-hover dataTables" >
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>IP 地址</th>
-                                        <th>新增時間</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach($bannerClickData as $row): ?>
-                                    <tr>
-                                        <td><?php echo $row["id"] ?></td>
-                                        <td><?php echo $row["ip_address"] ?></td>
-                                        <td><?php echo $row["created_at"] ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-
-                            <hr/>
-
-                        <?php endif; ?>
-
                     </div>
                 </div>
             </div>
