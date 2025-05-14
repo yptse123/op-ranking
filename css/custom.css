@@ -47,6 +47,12 @@ body
     display: inline-block;
 }
 
+.mid-container .item .item-badge img
+{
+	max-width: 308px;
+	aspect-ratio: 3 / 4;
+}
+
 .mid-container .item .item-container img
 {
 	width: 100%;
@@ -67,7 +73,10 @@ body
 
 @media (max-width: 1200px)
 {
-	
+	.mid-container .item .item-badge img
+	{
+		max-width: 259px;
+	}
 }
 
 @media (max-width: 1024px)
@@ -79,12 +88,7 @@ body
 
 	.mid-container .item .item-badge img 
 	{
-		max-width: 90px;
-	}
-
-	.mid-container .item .item-badge
-	{
-		width: 60%;
+		max-width: 194px;
 	}
 
 	.mid-container
@@ -110,7 +114,7 @@ body
 
 	.mid-container .item .item-badge img 
 	{
-		max-width: 70px;
+		max-width: 146px;
 	}
 
 	.mid-container
@@ -120,16 +124,19 @@ body
 	}
 }
 
+@media (max-width: 575px)
+{
+	.mid-container .item .item-badge img 
+	{
+		max-width: 90%;
+	}
+}
+
 @media (max-width: 480px)
 {
 	.top-container .top-container-logo
 	{
 		max-width: 223px;
-	}
-
-	.mid-container .item .item-badge img 
-	{
-		max-width: 50px;
 	}
 }
 

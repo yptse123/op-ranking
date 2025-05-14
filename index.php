@@ -2,12 +2,20 @@
 
 <?php
 
-$max = 6;
+$rankingMax = 6;
+$bannerMax = 6;
+$preOrderMax = 3;
+
+$condition = array("pre_order" => 0);
+$rankingData = array();
+$rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition, "rank DESC", 1, $rankingMax);
 
 $condition = array();
-$rankingData = array();
-$rankingData = PM::getSingleton("Database")->getCollection("ranking", $condition, "rank DESC", 1, $max);
-$bannerData = PM::getSingleton("Database")->getCollection("banner", $condition, "rank DESC", 1, $max);
+$bannerData = PM::getSingleton("Database")->getCollection("banner", $condition, "rank DESC", 1, $bannerMax);
+
+$condition = array("pre_order" => 1);
+$preOrderData = array();
+$preOrderData = PM::getSingleton("Database")->getCollection("ranking", $condition, "rank DESC", 1, $preOrderMax);
 
 $condition = array(
 	"is_active" => array(
@@ -25,13 +33,27 @@ $condition = array(
 );
 $announcementData = PM::getSingleton("Database")->getCollection("announcement", $condition, "rank DESC", 1, 999);
 
-if(count($rankingData) < $max)
+if(count($rankingData) < $rankingMax)
 {
-	$loop =  $max-count($rankingData);
+	$loop =  $rankingMax-count($rankingData);
 
 	for ($i=0; $i < $loop; $i++) 
 	{ 
 		$rankingData[$i+count($rankingData)] = array(
+			"title" => "尚未推出 敬請期待",
+			"url" => "",
+			"thumbnail_url" => "images/coming.png",
+		);
+	}
+}
+
+if(count($preOrderData) < $preOrderMax)
+{
+	$loop =  $preOrderMax-count($preOrderData);
+
+	for ($i=0; $i < $loop; $i++) 
+	{ 
+		$preOrderData[$i+count($preOrderData)] = array(
 			"title" => "尚未推出 敬請期待",
 			"url" => "",
 			"thumbnail_url" => "images/coming.png",
@@ -117,7 +139,7 @@ if(count($rankingData) < $max)
 
 					<div class="item-badge">
 
-						<img src="images/no<?php echo $count ?>_.png">
+						<img src="images/no<?php echo $count ?>.png">
 
 					</div>
 
@@ -156,6 +178,50 @@ if(count($rankingData) < $max)
 						</div>
 
 						<?php endif; ?>
+
+					</div>
+
+				</div>
+
+				<?php if($count % 3 == 0): ?>
+
+				</div>
+
+				<?php endif; ?>
+
+				<?php
+
+					$count++;
+
+				endforeach;
+
+				?>
+
+				<div class="container-title">即將推出</div>
+
+				<?php
+
+				$count = 1;
+
+				foreach($preOrderData as $row):
+
+				?>
+
+				<?php if($count % 3 == 1): ?>
+
+				<div class="row">
+
+				<?php endif; ?>
+
+				<div class="item">
+
+					<div class="item-container">
+
+						<a href="<?php echo $row["url"] ?>" target="_blank">
+
+							<img src="<?php echo $row["thumbnail_url"] ?>" class="item-thumb" alt="<?php echo $row["title"] ?>" title="<?php echo $row["title"] ?>">
+
+						</a>
 
 					</div>
 

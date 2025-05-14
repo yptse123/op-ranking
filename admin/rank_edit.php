@@ -34,6 +34,7 @@ if(!empty($_POST))
                 "thumbnail_url" => $_POST['thumbnail_url'],
                 "rank" => $_POST['rank'],
                 "redeem_code" => $_POST['redeem_code'],
+                "pre_order" => $_POST['pre_order'] == 'on' ? 1 : 0,
             );
 
             $sql = "SELECT * FROM ranking 
@@ -193,6 +194,13 @@ if($id)
                                             <label class="control-label col-sm-2"> 遊戲 <span style="color:red;">*</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="title" value="<?php echo !empty($rankingData["title"]) ? htmlentities($rankingData["title"]) : '' ?>" class="form-control" required/>
+
+                                                <br/>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="pre_order" <?php echo (!empty($rankingData["pre_order"]) && $rankingData["pre_order"] == 1) ? 'checked' : '' ?>> 即將推出
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
 
