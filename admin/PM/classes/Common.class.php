@@ -23,20 +23,22 @@ class PM_Common
         return 'unknown';
     }
 
-    public function generateCsrfToken() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+    public function generateCsrfToken()
+    {
+        // PHP 5.6 compatible random token generation
+        if (function_exists('random_bytes')) {
+            // PHP 7.0+ method
+            return bin2hex(random_bytes(32));
+        } elseif (function_exists('openssl_random_pseudo_bytes')) {
+            // Fallback for PHP 5.6 with OpenSSL
+            return bin2hex(openssl_random_pseudo_bytes(32));
+        } elseif (function_exists('mcrypt_create_iv')) {
+            // Fallback for PHP 5.6 with mcrypt (deprecated but still available)
+            return bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+        } else {
+            // Last resort fallback (less secure but works)
+            return hash('sha256', uniqid(mt_rand(), true) . microtime(true) . $_SERVER['REMOTE_ADDR']);
         }
-
-        if(!empty($_SESSION['csrf_token'])) {
-            return $_SESSION['csrf_token'];
-        }
-
-        $token = bin2hex(random_bytes(32));
-        $_SESSION['csrf_token'] = $token;
-        $_SESSION['csrf_token_time'] = time(); 
-
-        return $token;
     }
 
     public function verifyCsrfToken($csrfToken) {
