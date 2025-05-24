@@ -1,8 +1,4 @@
-<?php 
-// Set timezone before any date operations
-date_default_timezone_set('Asia/Hong_Kong');
-include('admin/PM/PM.php'); 
-?>
+<?php include('admin/PM/PM.php'); ?>
 
 <?php
 

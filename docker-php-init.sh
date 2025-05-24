@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-# Update PHP configuration for session management
-echo "Configuring PHP for proper session management..."
+# Update PHP configuration for session management and timezone
+echo "Configuring PHP for proper session management and timezone..."
 echo "session.auto_start = 0" > /usr/local/etc/php/conf.d/session.ini
 echo "output_buffering = 4096" >> /usr/local/etc/php/conf.d/session.ini
+echo "date.timezone = Asia/Hong_Kong" >> /usr/local/etc/php/conf.d/session.ini
 
 # Update PHP configuration for error handling
 echo "display_errors = On" > /usr/local/etc/php/conf.d/error.ini
