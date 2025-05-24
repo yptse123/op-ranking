@@ -1,8 +1,9 @@
 <?php
 
-class PM_Common 
+class PM_Common
 {
-   public function getClientIp() {
+    public function getClientIp()
+    {
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ipList = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
             $ip = trim($ipList[0]);
@@ -25,41 +26,48 @@ class PM_Common
 
     public function generateCsrfToken()
     {
-        // PHP 5.6 compatible random token generation
-        if (function_exists('random_bytes')) {
-            // PHP 7.0+ method
-            return bin2hex(random_bytes(32));
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            // Fallback for PHP 5.6 with OpenSSL
-            return bin2hex(openssl_random_pseudo_bytes(32));
-        } elseif (function_exists('mcrypt_create_iv')) {
-            // Fallback for PHP 5.6 with mcrypt (deprecated but still available)
-            return bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
-        } else {
-            // Last resort fallback (less secure but works)
-            return hash('sha256', uniqid(mt_rand(), true) . microtime(true) . $_SERVER['REMOTE_ADDR']);
-        }
-    }
-
-    public function verifyCsrfToken($csrfToken) {
-        if (session_status() === PHP_SESSION_NONE) {
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        if (empty($csrfToken) || empty($_SESSION['csrf_token'])) {
+        // Generate token if it doesn't exist
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = $this->generateRandomString(64);
+        }
+
+        return $_SESSION['csrf_token'];
+    }
+
+    private function generateRandomString($length = 64)
+    {
+        // PHP 5.6 compatible random string generation
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[mt_rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
+
+    public function verifyCsrfToken($token)
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (empty($token) || empty($_SESSION['csrf_token'])) {
             return false;
         }
 
-        if ($csrfToken !== $_SESSION['csrf_token']) {
-            return false;
+        // Use hash_equals if available (PHP 5.6+), otherwise use string comparison
+        if (function_exists('hash_equals')) {
+            return hash_equals($_SESSION['csrf_token'], $token);
+        } else {
+            return $_SESSION['csrf_token'] === $token;
         }
-
-        // $tokenTime = $_SESSION['csrf_token_time'] ?? 0;
-        // if ((time() - $tokenTime) > 3600) {
-        //     unset($_SESSION['csrf_token'], $_SESSION['csrf_token_time']);
-        //     return false;
-        // }
-
-        return true;
     }
 }
