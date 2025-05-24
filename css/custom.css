@@ -1,202 +1,218 @@
 body
 {
-	font-family: '蘋果儷中黑', Raleway, sans-serif;
-	font: 800 20px/1.6875 '蘋果儷中黑', Raleway, sans-serif;
-	color: #fff;
+    font-family: '蘋果儷中黑', Raleway, sans-serif;
+    font: 800 20px/1.6875 '蘋果儷中黑', Raleway, sans-serif;
+    color: #fff;
 }
 
 .top-container
 {
-	background-image: url('../images/topbar.png');
-	width: 100%;
+    background-image: url('../images/topbar.png');
+    width: 100%;
     background-repeat: repeat-x;
-	text-align: center;
-	display: inline-block;
-	white-space: nowrap;
-	border-bottom: 5px #fff solid;
+    text-align: center;
+    display: inline-block;
+    white-space: nowrap;
+    border-bottom: 5px #fff solid;
 }
 
 .top-container .top-container-logo
 {
-	width: 100%;
-	max-width: 443px;
-	vertical-align: middle;
-	margin: 20px 0;
+    width: 100%;
+    max-width: 443px;
+    vertical-align: middle;
+    margin: 20px 0;
 }
 
 .mid-container
 {
-	background-image: url('../images/bg.png');
-	padding: 5% 0;
-	background-size: cover;
+    background-image: url('../images/bg.png');
+    padding: 5% 0;
+    background-size: cover;
     height: 100%;
 }
 
 .mid-container .container-title
 {
-	border-left: 4px #b90000 solid;
-	line-height: 1;
+    border-left: 4px #b90000 solid;
+    line-height: 1;
     padding-left: 5px;
 }
 
 .mid-container .item
 {
-	width: 33%;
-	padding: 3%;
-	position: relative;
+    width: 33%;
+    padding: 3%;
+    position: relative;
     display: inline-block;
 }
 
 .mid-container .item .item-badge img
 {
-	max-width: 308px;
-	aspect-ratio: 3 / 4;
+    max-width: 308px;
+    aspect-ratio: 3 / 4;
 }
 
 .mid-container .item .item-container img
 {
-	width: 100%;
+    width: 100%;
 }
 
 .mid-container .item .item-badge img 
 {
-	width: 100%;
+    width: 100%;
 }
 
 .mid-container .item .item-badge
 {
-	display: inline-block;
+    display: inline-block;
     position: absolute;
     right: 8.5%;
     text-align: right;
+    pointer-events: none; /* Allow clicks to pass through the badge */
+    z-index: 10; /* Ensure badge is visible but doesn't block clicks */
+}
+
+/* Ensure the item container link is clickable */
+.mid-container .item .item-container
+{
+    position: relative;
+    z-index: 1;
+}
+
+.mid-container .item .item-container a
+{
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 1200px)
 {
-	.mid-container .item .item-badge img
-	{
-		max-width: 259px;
-	}
+    .mid-container .item .item-badge img
+    {
+        max-width: 259px;
+    }
 }
 
 @media (max-width: 1024px)
 {
-	.top-container .top-container-logo
-	{
-		max-width: 353px;
-	}
+    .top-container .top-container-logo
+    {
+        max-width: 353px;
+    }
 
-	.mid-container .item .item-badge img 
-	{
-		max-width: 194px;
-	}
+    .mid-container .item .item-badge img 
+    {
+        max-width: 194px;
+    }
 
-	.mid-container
-	{
-		height: 100%;
-	}
+    .mid-container
+    {
+        height: 100%;
+    }
 }
 
 @media (max-width: 992px)
 {
-	.mid-container
-	{
-		height: 100%;
-	}
+    .mid-container
+    {
+        height: 100%;
+    }
 }
 
 @media (max-width: 767px)
 {
-	.top-container .top-container-logo
-	{
-		max-width: 333px;
-	}
+    .top-container .top-container-logo
+    {
+        max-width: 333px;
+    }
 
-	.mid-container .item .item-badge img 
-	{
-		max-width: 146px;
-	}
+    .mid-container .item .item-badge img 
+    {
+        max-width: 146px;
+    }
 
-	.mid-container
-	{
-		height: 100vh;
-	    height: calc(var(--vh, 1vh) * 100);
-	}
+    .mid-container
+    {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+    }
 }
 
 @media (max-width: 575px)
 {
-	.mid-container .item .item-badge img 
-	{
-		max-width: 90%;
-	}
+    .mid-container .item .item-badge img 
+    {
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 480px)
 {
-	.top-container .top-container-logo
-	{
-		max-width: 223px;
-	}
+    .top-container .top-container-logo
+    {
+        max-width: 223px;
+    }
 }
 
 .item-redeem
 {
-	text-align: center;
-	margin-top: 15px;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .item-redeem .item-redeem-img, .item-redeem .item-redeem-close, .item-announcement-close
 {
-	width: 85%;
-	cursor: pointer;
+    width: 85%;
+    cursor: pointer;
 }
 
 .item-redeem .item-redeem-code-title
 {
-	color: #000;
+    color: #000;
 }
 
 .item-redeem .item-redeem-code
 {
-	color: red;
-	font-size: 2rem;
-	margin: 15px 0;
+    color: red;
+    font-size: 2rem;
+    margin: 15px 0;
 }
 
 .owl-theme .owl-nav.disabled+.owl-dots
 {
-	margin-top: -2rem;
+    margin-top: -2rem;
     z-index: 999;
     position: relative;
 }
 
 .owl-theme .owl-dots .owl-dot span
 {
-	background: #fff;
+    background: #fff;
 }
 
 .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span
 {
-	background: red;
+    background: red;
 }
 
 .announcement-modal .modal-content
 {
-	background-color: transparent;
-	border: none;
+    background-color: transparent;
+    border: none;
 }
 
 .announcement-modal .modal-body
 {
-	background-image: url('../images/announcement_bg.png');
-	background-size: cover;
-	background-position: top;
+    background-image: url('../images/announcement_bg.png');
+    background-size: cover;
+    background-position: top;
 }
 
 .announcement-modal #announcementImage, .announcement-modal #announcementContent
 {
-	width: 100%;
+    width: 100%;
     padding: 5px;
 }
 
@@ -209,5 +225,5 @@ body
 
 .announcement-modal .item-announcement-close-container
 {
-	text-align: center;
+    text-align: center;
 }
