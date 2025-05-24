@@ -39,8 +39,6 @@ try {
             continue;
         }
 
-        print_r($stats);
-
         $sql = "UPDATE banner SET impression = impression + :impression, click = click + :click WHERE id = :id";
         $stmt = $writeCon->prepare($sql);
         $stmt->execute([
