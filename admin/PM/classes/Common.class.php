@@ -16,7 +16,8 @@ class PM_Common
                 return $ip;
             }
         }
-        $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        // Replace ?? operator with isset() ternary for PHP 5.6 compatibility
+        $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             return $ip;
         }
